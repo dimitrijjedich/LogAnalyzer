@@ -6,6 +6,11 @@ import (
 	"os"
 )
 
+type Entry struct {
+	time string
+	log  string
+}
+
 func main() {
 	readFile, err := os.Open("test.log")
 	if err != nil {
