@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -21,8 +22,12 @@ func readFile(filename string) ([]string, error) {
 	defer readFile.Close()
 	fileScanner := bufio.NewScanner(readFile)
 	fileScanner.Split(bufio.ScanLines)
+	regExp := regexp.MustCompile(`^\[\d{4}-\d{2}-\d{2}`)
 	for fileScanner.Scan() {
-		lines = append(lines, fileScanner.Text())
+		line := fileScanner.Text()
+		if regExp.MatchString(line) {
+			lines = append(lines, line)
+		}
 	}
 	if err := fileScanner.Err(); err != nil {
 		return nil, err
